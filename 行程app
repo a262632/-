@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>八日富士山與東京之旅 (分頁版)</title> 
+    <title>八日富士山與東京之旅 (V2.0)</title> 
     <!-- 載入 Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -99,95 +99,104 @@
 </div>
 
 <script>
-    // 8天旅遊行程模擬資料 (12/13 - 12/20)
+    // 8天旅遊行程資料 (12/13 - 12/20) - **已恢復 Day 1 行程：住宿資訊與抵達分離 (V2.0)**
     const itineraryData = [
         {
-            id: 'day1', day: 1, date: '12/13', location: '富士山/河口湖 (Fuji/Kawaguchiko)', theme: '富士山經典美景與忍野八海',
-            map_query: '忍野八海', 
+            id: 'day1', day: 1, date: '12/13 (五)', location: '東京 (抵達/新宿)', theme: '抵達、機場快線與新宿 Check-in',
+            map_query: '成田機場 新宿', 
             activities: [
-                { time: '10:00', name: '河口湖站', detail: '從新宿等地區搭乘巴士或火車抵達河口湖站。**建議在此搭乘計程車前往山中湖地區。**', map_query: '河口湖車站' },
-                { time: '11:00', name: '山中湖平野', detail: '位於山中湖畔的平野地區，是欣賞富士山倒影（逆富士）的絕佳地點。**可搭乘計程車或富士急行巴士。**', map_query: '山中湖平野' },
-                { time: '13:30', name: '山中湖-長池親水公園 (午餐)', detail: '著名的賞富士山地點，有機會在湖畔拍攝到優美的富士山景觀。午餐可在附近餐廳解決。**可步行或搭乘湖畔周遊巴士。**', map_query: '山中湖 長池親水公園' },
-                { time: '15:30', name: '忍野八海', detail: '被譽為「日本九寨溝」的天然湧泉群。**可搭乘富士急行路線巴士或計程車。**', map_query: '忍野八海' },
-                { time: '18:30', name: '晚餐與入住 (河口湖地區)', detail: '返回河口湖或山中湖周邊，享用晚餐並辦理飯店入住手續。**建議使用計程車或飯店接駁。**', map_query: '河口湖附近飯店' }
+                // 1. Arrival - 僅包含抵達時間與資訊
+                { time: '19:20', name: '抵達成田機場 (NRT)', 
+                  detail: '預計於此時間落地。建議事先查好前往新宿的路徑。', 
+                  transportation: 'N/A', notes: 'N/A' 
+                }, 
+                { time: '20:30', name: '機場入境、購買交通票券', 
+                  detail: '預留 1.5 - 2 小時用於入境手續與購票。', 
+                  transportation: 'Narita Express (N\'EX) 或 Skyliner (轉 JR 山手線)', notes: 'N/A' 
+                },
+                // 3. Accommodation - 住宿備註獨立出來
+                { time: '22:30', name: '抵達新宿，Check-in', 
+                  detail: 'N/A', 
+                  transportation: 'N/A', notes: '住宿：旅程前四晚住宿地點為新宿地區飯店' // 住宿資訊移至 Notes 欄位
+                }
             ]
         },
         {
-            id: 'day2', day: 2, date: '12/14', location: '富士山/東京 (Fuji/Tokyo)', theme: '湖畔纜車與東京移動',
-            map_query: '富士山全景纜車',
+            id: 'day2', day: 2, date: '12/14 (六)', location: '東京/富士山 (河口湖)', theme: '從新宿前往河口湖、新倉富士淺間神社',
+            map_query: '河口湖 新倉富士淺間神社',
             activities: [
-                { time: '09:00', name: '河口湖富士山全景纜車', detail: '搭乘纜車登上天上山公園，從高處俯瞰景色。**從河口湖站可步行或搭乘周遊巴士。**', map_query: '河口湖 富士山全景纜車' },
-                { time: '11:00', name: '河口湖畔散步', detail: '在湖畔周邊輕鬆散步。**主要以步行/周遊巴士為主。**', map_query: '河口湖畔散步道' },
-                { time: '14:00', name: '前往東京', detail: '在河口湖站搭乘高速巴士或富士急行線前往東京新宿。**主要交通工具為高速巴士/火車。**', map_query: '新宿高速巴士總站' },
-                { time: '17:00', name: '東京車站/飯店入住', detail: '抵達東京後，辦理飯店入住手續並稍作休息。**主要使用JR/地下鐵移動。**', map_query: '東京車站附近飯店' },
-                { time: '19:30', name: '銀座晚餐與散步', detail: '在時尚的銀座區享用晚餐。**主要使用東京地下鐵。**', map_query: '銀座' }
+                { time: '08:30', name: '前往新宿高速巴士總站', detail: '', transportation: '地鐵或步行', notes: '' },
+                { time: '09:00', name: '搭乘高速巴士前往河口湖', detail: '需事先訂票！', transportation: '高速巴士 (Busta Shinjuku)', notes: '' },
+                { time: '11:20', name: '抵達河口湖站、午餐 (餺飥)', detail: '午餐： 河口湖站周邊', transportation: 'N/A', notes: '' },
+                { time: '13:00', name: '新倉富士淺間神社 (忠靈塔)', detail: '建議購買富士五湖周遊券', transportation: '富士急行線：河口湖站 → 下吉田站 (步行 15-20min 上山)', notes: '' },
+                { time: '16:30', name: '下山，前往住宿地', detail: '', transportation: '富士急行線：下吉田站 → 富士山站 (步行或計程車)', notes: '住宿： The Noborisaka Village' }
             ]
         },
         {
-            id: 'day3', day: 3, date: '12/15', location: '東京 (Tokyo)', theme: '傳統文化與潮流藝術',
-            map_query: '淺草寺',
+            id: 'day3', day: 3, date: '12/15 (日)', location: '富士山 (忍野八海/山中湖)', theme: '忍野八海與山中湖周邊遊覽',
+            map_query: '忍野八海 山中湖',
             activities: [
-                { time: '09:00', name: '淺草寺', detail: '穿過雷門和仲見世商店街。**搭乘都營淺草線或東京地下鐵銀座線。**', map_query: '淺草寺' },
-                { time: '11:00', name: '晴空塔 (遠眺)', detail: '欣賞東京新地標。**可搭乘東武晴空塔線或步行。**', map_query: '東京晴空塔' },
-                { time: '14:00', name: '上野公園與博物館', detail: '上野公園內有東京國立博物館等。**搭乘JR或地下鐵日比谷線/銀座線至上野站。**', map_query: '上野公園' },
-                { time: '18:00', name: '秋葉原 (動漫/電器)', detail: '逛逛電器店和動漫周邊商店。**搭乘JR山手線或總武線。**', map_query: '秋葉原' }
+                { time: '09:00', name: '前往忍野八海', detail: '使用富士五湖周遊券', transportation: '富士急行巴士：富士山站 → 忍野八海入口', notes: '' },
+                { time: '12:00', name: '忍野八海午餐與遊覽', detail: '', transportation: 'N/A', notes: '' },
+                { time: '14:00', name: '前往山中湖', detail: '', transportation: '富士急行巴士：忍野八海入口 → 山中湖周邊', notes: '' },
+                { time: '17:00', name: '返回住宿地', detail: '', transportation: '富士急行巴士：山中湖 → 富士山站', notes: '住宿： The Noborisaka Village' }
             ]
         },
         {
-            id: 'day4', day: 4, date: '12/16', location: '東京 (Tokyo)', theme: '澀谷潮流與新宿夜景',
-            map_query: '澀谷十字路口',
+            id: 'day4', day: 4, date: '12/16 (一)', location: '富士山 (河口湖周遊)', theme: '西湖療癒之里、大石公園與音樂盒之森',
+            map_query: '西湖療癒之里根場 大石公園',
             activities: [
-                { time: '09:00', name: '明治神宮', detail: '東京市中心最大的綠地。**搭乘JR山手線至原宿站，步行前往。**', map_query: '明治神宮' },
-                { time: '11:00', name: '竹下通/原宿', detail: '體驗東京最前衛的年輕人文化。**從明治神宮可步行。**', map_query: '原宿 竹下通' },
-                { time: '14:00', name: '澀谷十字路口', detail: '體驗全世界最繁忙的十字路口。**搭乘JR山手線或各線地下鐵至澀谷站。**', map_query: '澀谷車站' },
-                { time: '19:00', name: '新宿都廳夜景', detail: '免費觀景台，欣賞東京的百萬夜景。**搭乘JR至新宿站，步行約15分鐘或轉乘地下鐵。**', map_query: '東京都廳展望台' }
+                { time: '09:00', name: '西湖療癒之里根場', detail: '推薦一早前往', transportation: '富士急行線 → 河口湖站 → 西湖周遊巴士 (綠線)', notes: '' },
+                { time: '11:30', name: '大石公園 (河口湖自然生活館)', detail: '', transportation: '河口湖站 → 河口湖周遊巴士 (紅線)', notes: '' },
+                { time: '13:00', name: '午餐', detail: '', transportation: '紅線沿線餐廳', notes: '' },
+                { time: '15:00', name: '音樂盒之森美術館', detail: '', transportation: '河口湖周遊巴士 (紅線)', notes: '' },
+                { time: '17:00', name: '河口湖香草館', detail: '', transportation: '河口湖周遊巴士 (紅線)', notes: '' },
+                { time: '18:30', name: '返回住宿地', detail: '', transportation: '河口湖站 → 富士急行線 → 富士山站', notes: '住宿： The Noborisaka Village' }
             ]
         },
         {
-            id: 'day5', day: 5, date: '12/17', location: '東京近郊 (Kamakura)', theme: '古都鎌倉海景與大佛散策',
-            map_query: '鎌倉大佛',
+            id: 'day5', day: 5, date: '12/17 (二)', location: '富士山/東京 (移動日)', theme: '從富士山返回東京、六本木夜景',
+            map_query: '富士山站 新宿 六本木',
             activities: [
-                { time: '09:00', name: '前往鎌倉', detail: '從東京搭乘JR橫須賀線前往古都鎌倉，約一小時車程。**主要交通工具為JR橫須賀線。**', map_query: '鎌倉車站' },
-                { time: '11:00', name: '鎌倉大佛 (高德院)', detail: '參觀莊嚴宏偉的青銅製阿彌陀佛像。**從鎌倉站搭乘江之電至長谷站。**', map_query: '高德院 鎌倉大佛' },
-                { time: '13:00', name: '小町通 (午餐/購物)', detail: '在充滿傳統氣息的商店街上享用午餐。**從鎌倉站步行可達。**', map_query: '鎌倉 小町通' },
-                { time: '15:30', name: '江之島/江之電', detail: '可搭乘江之電欣賞海景。**搭乘江之電線。**', map_query: '江之島' },
-                { time: '17:00', name: '返回東京/自由活動', detail: '搭乘火車返回東京市區。**主要交通工具為JR橫須賀線。**', map_query: '東京' }
+                { time: '11:00', name: '退房、前往河口湖站', detail: '', transportation: '富士急行線：富士山站 → 河口湖站', notes: '' },
+                { time: '12:00', name: '河口湖站午餐', detail: '', transportation: 'N/A', notes: '' },
+                { time: '13:00', name: '搭乘高速巴士前往東京新宿', detail: '需事先訂票！', transportation: '高速巴士', notes: '' },
+                { time: '15:00', name: '抵達新宿，Check-in', detail: '', transportation: '步行或地鐵', notes: '住宿： 東橫INN (新宿)' },
+                { time: '17:00', name: '前往六本木', detail: '欣賞夜景與東京鐵塔', transportation: '都營大江戶線：新宿 → 六本木站', notes: '' },
+                { time: '20:30', name: '六本木晚餐/夜景', detail: '', transportation: 'N/A', notes: '' }
             ]
         },
         {
-            // Day 6 (12/18) - 東京全日
-            id: 'day6', day: 6, date: '12/18', location: '東京 (Tokyo)', theme: '台場與六本木未來都市漫遊',
-            map_query: '台場 DiverCity Tokyo Plaza',
+            id: 'day6', day: 6, date: '12/18 (三)', location: '東京 (橫濱一日遊)', theme: '明治神宮與橫濱港未來區',
+            map_query: '明治神宮 橫濱紅磚倉庫',
             activities: [
-                { time: '09:00', name: '前往台場', detail: '從市區搭乘JR到新橋站，轉乘百合海鷗號前往台場。**搭乘JR與百合海鷗號。**', map_query: '新橋車站' },
-                { time: '11:00', name: '富士電視台與自由女神像', detail: '在台場海濱公園區散步，參觀標誌性的地標。**步行。**', map_query: '台場海濱公園 自由女神像' },
-                { time: '14:00', name: 'DiverCity Tokyo Plaza (購物與鋼彈)', detail: '午餐與購物，並參觀戶外的實體大鋼彈立像。**步行。**', map_query: 'DiverCity Tokyo Plaza' },
-                { time: '17:00', name: '前往六本木', detail: '搭乘百合海鷗號回到新橋，轉乘地鐵前往六本木。**搭乘地鐵/百合海鷗號。**', map_query: '六本木車站' },
-                { time: '19:00', name: '六本木之丘森大樓 (晚餐與夜景)', detail: '在Roppongi Hills或Tokyo Midtown享用晚餐，並登上觀景台欣賞東京塔夜景。**步行。**', map_query: '六本木之丘展望台' }
+                { time: '09:00', name: '明治神宮', detail: '', transportation: 'JR 山手線：新宿 → 原宿站', notes: '' },
+                { time: '11:00', name: '前往橫濱', detail: '', transportation: 'JR 湘南新宿線：新宿 → 櫻木町站 (直達)', notes: '' },
+                { time: '12:00', name: '橫濱午餐 (港未來區/中華街)', detail: '', transportation: 'N/A', notes: '' },
+                { time: '14:00', name: '橫濱紅磚倉庫', detail: '', transportation: '港灣未來線：櫻木町站 → 馬車道站/日本大通站', notes: '' },
+                { time: '17:00', name: '橫濱港未來區', detail: '', transportation: '步行/港灣未來線', notes: '' },
+                { time: '20:00', name: '返回新宿', detail: '', transportation: 'JR 湘南新宿線：橫濱站 → 新宿站', notes: '住宿： 東橫INN (新宿)' }
             ]
         },
         {
-            // Day 7 (12/19) - 東京下町與文青路線
-            id: 'day7', day: 7, date: '12/19', location: '東京 (Tokyo)', theme: '下町懷舊與文青咖啡巡禮',
-            map_query: '谷中銀座商店街',
+            id: 'day7', day: 7, date: '12/19 (四)', location: '東京 (澀谷/原宿/新宿)', theme: '潮流文化、逛街與最終採買',
+            map_query: '澀谷 Scramble Square 原宿竹下通',
             activities: [
-                { time: '09:30', name: '谷中銀座商店街', detail: '體驗東京碩果僅存的懷舊下町風情，品嚐在地小吃。**搭乘JR至日暮里站，步行前往。**', map_query: '谷中銀座商店街' },
-                { time: '12:00', name: '根津神社 (午餐)', detail: '參觀歷史悠久、擁有千本鳥居的美麗神社。午餐可在谷根千地區解決。**步行或搭乘地鐵。**', map_query: '根津神社' },
-                { time: '14:30', name: '代官山蔦屋書店', detail: '被譽為「森林中的圖書館」，享受高品質的閱讀和咖啡時光。**搭乘東急東橫線至代官山站。**', map_query: '代官山 蔦屋書店' },
-                { time: '17:00', name: '中目黑/惠比壽散步', detail: '沿著目黑川散步，逛逛中目黑的特色小店。**步行或搭乘地鐵。**', map_query: '中目黑目黑川' },
-                { time: '19:30', name: '惠比壽橫丁 (晚餐)', detail: '體驗充滿活力的日式居酒屋橫丁，感受庶民美食氛圍。**步行或搭乘JR/地鐵。**', map_query: '惠比壽橫丁' }
+                { time: '10:00', name: '澀谷', detail: '澀谷交叉口、Scramble Square', transportation: 'JR 山手線：新宿 → 澀谷站', notes: '' },
+                { time: '13:00', name: '澀谷午餐', detail: '', transportation: 'N/A', notes: '' },
+                { time: '15:00', name: '原宿竹下通/表參道', detail: '', transportation: 'JR 山手線：澀谷 → 原宿站', notes: '' },
+                { time: '17:00', name: '新宿逛街', detail: '進行最後採買', transportation: 'JR 山手線：原宿 → 新宿站', notes: '' },
+                { time: '20:00', name: '新宿晚餐', detail: '', transportation: 'N/A', notes: '住宿： 東橫INN (新宿)' }
             ]
         },
         {
-            // Day 8 (12/20) - 最終返程日
-            id: 'day8', day: 8, date: '12/20', location: '東京/返程 (Tokyo/Return)', theme: '最終採購與機場交通',
-            map_query: '成田機場 或 羽田機場',
+            id: 'day8', day: 8, date: '12/20 (五)', location: '東京 (返程)', theme: '退房與前往機場',
+            map_query: '新宿 成田機場',
             activities: [
-                { time: '09:00', name: '築地場外市場 (早餐/午餐)', detail: '享用最新鮮的海產早餐或午餐。**搭乘地下鐵日比谷線或都營大江戶線。**', map_query: '築地場外市場' },
-                { time: '12:00', name: '最終購物 (車站/百貨)', detail: '在東京車站或新宿車站周邊進行最後的購物衝刺。**步行或搭乘地下鐵/JR。**', map_query: '東京車站購物' },
-                { time: '14:00', name: '飯店取行李', detail: '返回飯店領取寄放的行李。**搭乘地下鐵/JR。**', map_query: '東京車站附近飯店' },
-                { time: '15:30', name: '前往成田/羽田機場', detail: '根據航班時間，搭乘NEX、利木津巴士或京急線前往機場。**主要交通工具為NEX/利木津巴士/京急線。**', map_query: '成田機場交通' },
-                { time: '18:00', name: '結束旅程', detail: '辦理登機手續，搭乘飛機返回。', map_query: '機場' }
+                { time: '08:30', name: '早餐、整理行李、退房', detail: '', transportation: 'N/A', notes: '' },
+                { time: '09:00', name: '前往成田機場', detail: '預留充足交通時間', transportation: 'Narita Express (N\'EX) 或 利木津巴士', notes: '' },
+                { time: '10:00', name: '抵達成田機場', detail: '', transportation: 'N/A', notes: '' },
+                { time: '12:00', name: '飛機起飛', detail: '圓滿結束旅程', transportation: 'N/A', notes: '' }
             ]
         }
     ];
@@ -204,9 +213,13 @@
         "秋葉原 (Akihabara)",
         "鎌倉 (Kamakura)",
         "橫濱 (Yokohama)",
+        "櫻木町 (Sakuragicho)",
+        "馬車道 (Bashamichi) - 港灣未來線",
+        "日本大通 (Nihon-ōdōri) - 港灣未來線",
         "河口湖 (Kawaguchiko) - 富士急行線",
-        "大月 (Otsuki) - 轉乘點",
-        "長谷 (Hase) - 江之電"
+        "富士山 (Fujisan) - 富士急行線",
+        "下吉田 (Shimo-Yoshida) - 富士急行線",
+        "大月 (Otsuki) - 轉乘點"
     ];
 
     // 獲取DOM元素
@@ -214,7 +227,7 @@
     const headerTitle = document.getElementById('header-title');
     const tabBar = document.getElementById('tab-bar');
     const modal = document.getElementById('activity-detail-modal');
-    const modalContent = modal.querySelector('div.max-w-sm'); // 存儲 Modal 內容區域以進行動畫控制
+    const modalContent = modal.querySelector('div.max-w-sm'); 
 
     // App狀態管理
     let currentState = {
@@ -231,6 +244,8 @@
     let fromTimeSelections = {};
     // 目的自填時間狀態
     let toTimeSelections = {};
+    // 飛機班次自填狀態 (新增)
+    let flightNumberSelections = {};
 
     // 將函數暴露給全局
     window.showDay = showDay;
@@ -262,14 +277,19 @@
 
     /**
      * 儲存起點或終點站的 地點/站名 或 自填時間。
-     * @param {('from'|'to')} type - 選擇的類型 ('from' 或 'to')
-     * @param {('location'|'time')} field - 儲存的欄位類型
+     * @param {('from'|'to'|'N/A')} type - 選擇的類型 ('from', 'to', 或 'N/A' 給班次)
+     * @param {('location'|'time'|'flightNumber')} field - 儲存的欄位類型
      * @param {string} value - 輸入值
      * @param {string} activityId - 活動的唯一 ID (dayX_indexY)
      */
     function saveActivityInput(type, field, value, activityId) {
         // 儲存原始字串，若為空字串或無效值則存為 '未選擇' 或 ''
         const safeValue = (value && value.trim() !== '' && value !== '未選擇') ? value.trim() : (field === 'location' ? '未選擇' : '');
+
+        if (field === 'flightNumber') { // 處理班次儲存
+            flightNumberSelections[activityId] = safeValue;
+            return;
+        }
 
         if (type === 'from') {
             if (field === 'location') fromStationSelections[activityId] = safeValue;
@@ -369,9 +389,10 @@
     /**
      * 渲染或重新渲染站名選擇區塊
      * @param {string} activityId - 活動的唯一 ID
+     * @param {string} currentTransportation - 當前選擇的交通方式 (新增參數)
      * @param {boolean} isJRorTrain - 是否為 JR 或火車
      */
-    function renderStationSelectors(activityId, isJRorTrain) {
+    function renderStationSelectors(activityId, currentTransportation, isJRorTrain) {
         const stationSelectorsContainer = document.getElementById(`station-selectors-content-${activityId}`);
         if (!stationSelectorsContainer) return;
 
@@ -379,24 +400,48 @@
         const currentToStation = toStationSelections[activityId] || '未選擇';
         const currentFromTime = fromTimeSelections[activityId] || '';
         const currentToTime = toTimeSelections[activityId] || '';
+        const currentFlightNumber = flightNumberSelections[activityId] || ''; 
         
         stationSelectorsContainer.innerHTML = renderStationSelectorsHtml(
-            activityId, isJRorTrain, currentFromStation, currentToStation, currentFromTime, currentToTime
+            activityId, 
+            currentTransportation, // Pass transport selection
+            isJRorTrain, 
+            currentFromStation, currentToStation, 
+            currentFromTime, currentToTime,
+            currentFlightNumber 
         );
     }
     
     /**
      * 產生站點選擇器 HTML 字串，用於初始渲染和重新渲染。
      * @param {string} activityId - 活動的唯一 ID
+     * @param {string} currentTransportation - 當前選擇的交通方式
      * @param {boolean} isJRorTrain - 是否為 JR 或火車
      * @param {string} currentFromStation - 當前儲存的起點
      * @param {string} currentToStation - 當前儲存的終點
      * @param {string} currentFromTime - 當前儲存的起點時間
      * @param {string} currentToTime - 當前儲存的終點時間
+     * @param {string} currentFlightNumber - 當前儲存的航班號碼
      * @returns {string} 完整的 HTML 字串
      */
-    function renderStationSelectorsHtml(activityId, isJRorTrain, currentFromStation, currentToStation, currentFromTime, currentToTime) {
-        const headerText = isJRorTrain ? '鐵路站點規劃 (JR/火車)' : '起點/終點站點規劃 (自填)';
+    function renderStationSelectorsHtml(activityId, currentTransportation, isJRorTrain, currentFromStation, currentToStation, currentFromTime, currentToTime, currentFlightNumber) {
+        const isFlight = currentTransportation === '飛機';
+        
+        // 飛機模式：只顯示班次輸入
+        if (isFlight) {
+            return `
+                <p class="text-sm font-semibold text-gray-700 mb-3">飛機班次資訊：</p>
+                <div class="space-y-3">
+                    <label for="flight-number-input-${activityId}" class="block text-xs font-medium text-gray-500 mb-1">班次 (自填)</label>
+                    <input type="text" id="flight-number-input-${activityId}" value="${currentFlightNumber}" placeholder="請輸入航班號碼，例如: JX800"
+                           onchange="saveActivityInput('N/A', 'flightNumber', this.value, '${activityId}')"
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm p-2 bg-white">
+                </div>
+            `;
+        }
+
+        // 非飛機模式 (原始邏輯)
+        const headerText = isJRorTrain ? '鐵路站點規劃 (JR/火車/地鐵)' : '起點/終點站點規劃 (自填)';
         
         return `
             <p class="text-sm font-semibold text-gray-700 mb-3">${headerText}</p>
@@ -442,7 +487,7 @@
         const selectedSpan = document.getElementById(`transport-selected-${activityId}`);
         const selectorContainer = document.getElementById(`transport-selector-${activityId}`);
         
-        const isJRorTrain = (value === 'JR' || value === '火車');
+        const isJRorTrain = (value.includes('JR') || value.includes('火車') || value.includes('線') || value.includes('地鐵') || value.includes('快線'));
 
         if (selectedSpan) {
             const displayValue = value || '未選擇';
@@ -456,8 +501,8 @@
             document.getElementById(`transport-arrow-${activityId}`).classList.remove('rotate-180');
         }
         
-        // 2. 重新渲染站點選擇區塊以切換輸入模式 (Dropdown <-> Text Input)
-        renderStationSelectors(activityId, isJRorTrain);
+        // 2. 重新渲染站點選擇區塊以切換輸入模式 (Dropdown <-> Text Input 或 班次輸入)
+        renderStationSelectors(activityId, value, isJRorTrain); // 傳遞 value (currentTransportation)
     }
 
     /**
@@ -469,7 +514,7 @@
                 class="tab-button flex-shrink-0 px-4 py-3 text-sm font-semibold transition-colors duration-200 border-b-2 whitespace-nowrap
                        ${item.id === currentState.currentDayId ? 'text-indigo-600 border-indigo-600 bg-gray-50' : 'text-gray-500 border-transparent hover:text-indigo-500 hover:bg-gray-100'}"
                 onclick="showDay('${item.id}')">
-                DAY ${item.day} (${item.date})
+                DAY ${item.day} (${item.date.split(' ')[0]})
             </button>
         `).join('');
 
@@ -517,27 +562,61 @@
         const activitiesList = item.activities.map((activity, index) => { // 取得 index 作為唯一 ID 的一部分
             // 為了 JS 函數調用，對引號進行轉義
             const nameEscaped = activity.name.replace(/'/g, "\\'");
-            const detailEscaped = activity.detail.replace(/'/g, "\\'");
-            const mapQueryEscaped = (activity.map_query || activity.name).replace(/'/g, "\\'");
+            // 嘗試從活動名稱或詳細資訊中提取一個合理的 Google 地圖查詢
+            const mapQuery = activity.name + (activity.transportation ? ` ${activity.transportation}` : '');
+            const mapQueryEscaped = mapQuery.replace(/'/g, "\\'");
+            
+            // 詳情文字：如果 time 不是有效的時間（如：'住宿'），則使用 detail 作為描述。
+            const detailText = (activity.detail || activity.notes || activity.transportation || activity.name || '無詳細說明').replace(/\n/g, '<br>');
+            const detailEscaped = detailText.replace(/'/g, "\\'");
             
             const activityId = `${item.id}_${index}`; // 建立活動的唯一 ID
             
             // 獲取當前選擇狀態
-            const currentSelection = transportSelections[activityId] || '未選擇';
+            // 預設交通方式為表格中的值
+            if (!transportSelections[activityId]) {
+                 // 嘗試從表格的 transportation 欄位中提取交通方式作為預設值
+                if (activity.transportation && activity.transportation !== 'N/A') {
+                    transportSelections[activityId] = activity.transportation.split(':')[0].trim(); // 例如只取 "JR 山手線"
+                } else {
+                    transportSelections[activityId] = 'N/A';
+                }
+            }
+            const currentSelection = transportSelections[activityId];
+
+            // 預設起點/終點時間為表格中的 time 欄位
+            if (!fromTimeSelections[activityId]) {
+                fromTimeSelections[activityId] = activity.time || '';
+            }
+
             const currentFromStation = fromStationSelections[activityId] || '未選擇';
             const currentToStation = toStationSelections[activityId] || '未選擇';
             const currentFromTime = fromTimeSelections[activityId] || ''; 
             const currentToTime = toTimeSelections[activityId] || '';     
             
-            const isJRorTrain = (currentSelection === 'JR' || currentSelection === '火車');
+            const isJRorTrain = (currentSelection.includes('JR') || currentSelection.includes('火車') || currentSelection.includes('線') || currentSelection.includes('地鐵') || currentSelection.includes('快線'));
+            const currentFlightNumber = flightNumberSelections[activityId] || ''; // Retrieve flight number
             
-            // 建立交通方式下拉選單選項 HTML
+            // 建立交通方式下拉選單選項 HTML (新增飛機)
             const transportOptions = [
+                { value: "飛機", label: "飛機 (Airplane)" },
                 { value: "計程車", label: "計程車 (Taxi)" },
-                { value: "巴士", label: "巴士 (Bus)" },
-                { value: "JR", label: "JR (火車)" },
-                { value: "步行", label: "步行" }
+                { value: "巴士/高速巴士", label: "巴士/高速巴士" },
+                { value: "JR", label: "JR (火車/N'EX)" },
+                { value: "地鐵/私鐵", label: "地鐵/私鐵 (線)" },
+                { value: "步行", label: "步行" },
+                { value: "N/A", label: "不適用 (N/A)" }
             ].map(opt => `<button onclick="handleTransportationChange('${opt.value}', '${activityId}'); toggleTransportationSelector(event, '${activityId}');" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">${opt.label}</button>`).join('');
+
+            // 處理時間顯示，如果不是有效的時間，則使用不同的樣式
+            const isInfoOnly = activity.time.length > 5 || isNaN(new Date('1970/01/01 ' + activity.time));
+            const timeClass = isInfoOnly ? 'text-sm font-semibold text-gray-500 italic' : 'text-lg font-bold text-indigo-600';
+            const timeDisplay = isInfoOnly ? activity.time : activity.time;
+            
+            // 隱藏交通細節規劃區塊：如果 transportation 是 'N/A' 則隱藏
+            const hideTransportationDetail = (activity.transportation === 'N/A');
+            const transportationDetailClass = hideTransportationDetail ? 'hidden' : '';
+
 
             return `
                 <li class="mb-3 p-4 bg-white rounded-xl shadow-lg border border-gray-100">
@@ -549,11 +628,15 @@
                             '${mapQueryEscaped}'
                         )">
                         <div class="flex-shrink-0 mr-4 mt-1">
-                            <span class="text-lg font-bold text-indigo-600">${activity.time}</span>
+                            <span class="${timeClass}">${timeDisplay}</span>
                         </div>
                         <div class="flex-grow">
                             <p class="text-base font-semibold text-gray-900">${activity.name}</p>
-                            <p class="text-sm text-gray-500 mt-1 truncate">${activity.detail.split('**')[0]}...</p>
+                            <!-- 顯示表格中的備註和交通工具 -->
+                            <p class="text-sm text-gray-500 mt-1">
+                                ${activity.notes && activity.notes !== 'N/A' ? `<span class="font-bold text-yellow-600">${activity.notes}</span> - ` : ''} 
+                                ${activity.transportation && activity.transportation !== 'N/A' ? `交通：${activity.transportation}` : '無交通資訊'}
+                            </p>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mt-2 ml-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -561,10 +644,11 @@
                     </div>
                     
                     <!-- 交通方式選擇器/切換按鈕 -->
-                    <div class="mt-4 pt-4 border-t border-gray-200 relative" onclick="event.stopPropagation()">
+                    <div class="mt-4 pt-4 border-t border-gray-200 relative ${transportationDetailClass}" onclick="event.stopPropagation()">
                         <button class="w-full text-left flex justify-between items-center text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors p-2 rounded-lg bg-gray-50 hover:bg-gray-100"
                                 onclick="toggleTransportationSelector(event, '${activityId}')">
-                            <span>交通方式：<span id="transport-selected-${activityId}" class="font-extrabold ${currentSelection === '未選擇' ? 'text-red-500' : 'text-green-600'}">${currentSelection}</span></span>
+                            <!-- 更改標籤為「交通選擇」 -->
+                            <span>交通選擇：<span id="transport-selected-${activityId}" class="font-extrabold ${currentSelection === '未選擇' || currentSelection === 'N/A' ? 'text-red-500' : 'text-green-600'}">${currentSelection}</span></span>
                             <svg id="transport-arrow-${activityId}" class="transport-arrow w-4 h-4 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
@@ -576,11 +660,12 @@
                         </div>
                     </div>
 
-                    <!-- 站名選擇區塊 -->
-                    <div id="station-selectors-${activityId}" class="mt-4 pt-3 border-t border-gray-200">
+                    <!-- 站名選擇區塊 (交通細節規劃) -->
+                    <div id="station-selectors-${activityId}" class="mt-4 pt-3 border-t border-gray-200 ${transportationDetailClass}">
+                        <p class="text-sm font-semibold text-gray-700 mb-2">交通細節規劃：</p>
                         <div id="station-selectors-content-${activityId}">
-                            <!-- 初始渲染時調用 getStationInputHtml 填充內容 -->
-                            ${renderStationSelectorsHtml(activityId, isJRorTrain, currentFromStation, currentToStation, currentFromTime, currentToTime)}
+                            <!-- 初始渲染時調用 renderStationSelectorsHtml 填充內容 -->
+                            ${renderStationSelectorsHtml(activityId, currentSelection, isJRorTrain, currentFromStation, currentToStation, currentFromTime, currentToTime, currentFlightNumber)}
                         </div>
                     </div>
                 </li>
@@ -626,8 +711,8 @@
         const modalMapButton = document.getElementById('modal-map-button');
 
         modalTitle.textContent = name;
-        // 粗體顯示備註
-        modalDescription.innerHTML = description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
+        // 替換換行符號為 <br>
+        modalDescription.innerHTML = description.replace(/\n/g, '<br>'); 
         
         modalMapButton.onclick = () => {
             openMap(mapQuery);
